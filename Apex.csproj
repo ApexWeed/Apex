@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C575D398-E237-4829-92C7-4741147C77E4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Apex</RootNamespace>
+    <AssemblyName>Apex</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\InfoProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ControlUtil.cs" />
+    <Compile Include="EnumUtil.cs" />
+    <Compile Include="Extensions\ComboBoxObjectCollectionExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\IntExtensions.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\ListViewItemExtensions.cs" />
+    <Compile Include="Extensions\PointExtensions.cs" />
+    <Compile Include="Extensions\PointFExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TreeNodeCollectionExtensions.cs" />
+    <Compile Include="FileUtil.cs" />
+    <Compile Include="Formatting.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="InputFiltering.cs" />
+    <Compile Include="Layout\LayoutEndStub.cs" />
+    <Compile Include="Layout\LayoutEngine.cs" />
+    <Compile Include="Layout\LayoutItem.cs" />
+    <Compile Include="Layout\LayoutState.cs" />
+    <Compile Include="Prompt\FilePicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Prompt\FilePicker.Designer.cs">
+      <DependentUpon>FilePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Prompt\FolderPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Prompt\FolderPicker.Designer.cs">
+      <DependentUpon>FolderPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Prompt\Prompt.cs" />
+    <Compile Include="Prompt\StringComboBoxPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Prompt\StringComboBoxPrompt.Designer.cs">
+      <DependentUpon>StringComboBoxPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extensions\RectangleExtensions.cs" />
+    <Compile Include="Translation\Controls\TranslatableButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableButtonFormat.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableCheckBoxFormat.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableColumnHeaders.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableGroupBoxFormat.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableLabelFormat.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableNotifyIcon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableNotifyIconFormat.cs" />
+    <Compile Include="Translation\Controls\TranslatableRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableRadioButtonFormat.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableTitle.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableTitleFormat.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableTooltips.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Translation\Controls\TranslatableTooltipsFormat.cs" />
+    <Compile Include="Translation\Language.cs" />
+    <Compile Include="Translation\LanguageManager.cs" />
+    <Compile Include="Utilities.cs" />
+    <Compile Include="Win32.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Prompt\FilePicker.resx">
+      <DependentUpon>FilePicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompt\FolderPicker.resx">
+      <DependentUpon>FolderPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompt\StringComboBoxPrompt.resx">
+      <DependentUpon>StringComboBoxPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
