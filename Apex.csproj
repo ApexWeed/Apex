@@ -120,6 +120,9 @@
     <Compile Include="Translation\Controls\TranslatableLabelFormat.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Translation\Controls\TranslatableMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Translation\Controls\TranslatableNotifyIcon.cs">
       <SubType>Component</SubType>
     </Compile>
