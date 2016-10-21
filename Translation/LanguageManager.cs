@@ -252,6 +252,22 @@ namespace Apex.Translation
             }
         }
 
+        /// <summary>
+        /// Attemps to find any compatible controls or components in the specified control container and
+        /// set the language manager to this one.
+        /// </summary>
+        /// <param name="TargetForm">The form to search.</param>
+        public void AddAllControls(Form TargetForm)
+        {
+            AddControls(TargetForm.Controls);
+            var components = from field in TargetForm.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                             where typeof(Component).IsAssignableFrom(field.FieldType)
+                             let component = (Component)field.GetValue(TargetForm)
+                             where component != null
+                             select component;
+            AddComponents(components);
+        }
+
         public bool UseOSLanguage(string Default)
         {
             var currentCulture = CultureInfo.InstalledUICulture;
