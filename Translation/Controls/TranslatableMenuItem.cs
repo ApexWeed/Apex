@@ -8,12 +8,12 @@ using System.Windows.Forms;
 
 namespace Apex.Translation.Controls
 {
-    [ProvideProperty("Translation String", typeof(ToolStripMenuItem))]
-    [ProvideProperty("Default String", typeof(ToolStripMenuItem))]
-    class TranslatableMenuItem : Component, IExtenderProvider
+    [ProvideProperty("TranslationString", typeof(ToolStripMenuItem))]
+    [ProvideProperty("DefaultString", typeof(ToolStripMenuItem))]
+    public class TranslatableMenuItem : Component, IExtenderProvider
     {
-        private Dictionary<ToolStripMenuItem, string> translationStrings;
-        private Dictionary<ToolStripMenuItem, string> defaultStrings;
+        private Dictionary<ToolStripMenuItem, string> translationStrings = new Dictionary<ToolStripMenuItem, string>();
+        private Dictionary<ToolStripMenuItem, string> defaultStrings = new Dictionary<ToolStripMenuItem, string>();
 
         public bool CanExtend(object Extendee)
         {
