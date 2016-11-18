@@ -1,0 +1,40 @@
+File
+    AppendAllLines (x2)     -
+    AppendAllText (x2)      -
+    AppendText              -
+    Copy (x2)               -
+    Create (x4)             +1
+    CreateText              -
+    Decrypt                 -
+    Delete                  -
+    Encrypt                 -
+    Exists                  -
+    GetAccessControl (x2)   +2
+    GetAttributes           -
+    GetCreationTime         -
+    GetCreationTimeUtc      -
+    GetLastAccessTime       -
+    GetLastAccessTimeUtc    -
+    GetLastWriteTime        -
+    GetLastWriteTimeUtc     -
+    Move                    -
+    Open (x3)               -
+    OpenRead                -
+    OpenText                -
+    OpenWrite               -
+    ReadAllBytes            -
+    ReadAllLines (x2)       -
+    ReadAllText (x2)        -
+    ReadLines (x2)          -
+    Replace (x2)            -
+    SetAccessControl        +
+    SetAttributes           -
+    SetCreationTime         -
+    SetCreationTimeUtc      -
+    SetLastAccessTime       -
+    SetLastAccessTimeUtc    -
+    SetLastWriteTime        -
+    SetLastWriteTimeUtc     -
+    WriteAllBytes           -
+    WriteAllLines (x4)      -
+    WriteAllText (x2)       -

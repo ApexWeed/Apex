@@ -44,7 +44,7 @@ namespace Apex.Translation.Controls
             }
             else
             {
-                return String.Empty;
+                return string.Empty;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Apex.Translation.Controls
             }
             else
             {
-                return String.Empty;
+                return string.Empty;
             }
         }
 
