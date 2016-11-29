@@ -9,6 +9,9 @@ using Apex.Win32;
 
 namespace Apex.IO
 {
+    /// <summary>
+    /// Abstract base class for file system info.
+    /// </summary>
     public abstract class UnicodeFileSystemInfo
     {
         protected Win32Wrapper.WIN32_FILE_ATTRIBUTE_DATA data;
@@ -16,6 +19,9 @@ namespace Apex.IO
 
         protected string path;
 
+        /// <summary>
+        /// Attributes of the file / directory.
+        /// </summary>
         public FileAttributes Attributes
         {
             get
@@ -50,6 +56,9 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Creation time of the file / directory in local time.
+        /// </summary>
         public DateTime CreationTime
         {
             get
@@ -62,6 +71,9 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Creation time of the file / directory in UTC.
+        /// </summary>
         public DateTime CreationTimeUtc
         {
             get
@@ -86,13 +98,22 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Full name of the file / directory.
+        /// </summary>
         public string FullName
         {
             get { return path; }
         }
 
+        /// <summary>
+        /// Whether the file / directory exists.
+        /// </summary>
         public abstract bool Exists { get; }
 
+        /// <summary>
+        /// Last access time of the file / directory in local time.
+        /// </summary>
         public DateTime LastAccessTime
         {
             get
@@ -105,6 +126,9 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Last access time of the file / directory in UTC.
+        /// </summary>
         public DateTime LastAccessTimeUtc
         {
             get
@@ -129,6 +153,9 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Last write time of the file / directory in local time.
+        /// </summary>
         public DateTime LastWriteTime
         {
             get
@@ -141,6 +168,9 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Last write time of the file / directory in UTC.
+        /// </summary>
         public DateTime LastWriteTimeUtc
         {
             get
@@ -165,6 +195,9 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Name of the file / directory.
+        /// </summary>
         public abstract string Name { get; }
 
         protected UnicodeFileSystemInfo()
@@ -177,6 +210,9 @@ namespace Apex.IO
             dataInitialised = 0;
         }
 
+        /// <summary>
+        /// Deletes the file / directory.
+        /// </summary>
         public abstract void Delete();
 
         protected void EnsureDataLoaded()
@@ -193,6 +229,9 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Refreshes the attributes of the file / directory.
+        /// </summary>
         public void Refresh()
         {
             dataInitialised = UnicodeFile.FillAttributeInfo(UnicodePath.FormatPath(path), ref data, false);

@@ -9,10 +9,17 @@ using Apex.Win32;
 
 namespace Apex.IO
 {
+    /// <summary>
+    /// Provides information about a file.
+    /// </summary>
     public class UnicodeFileInfo : UnicodeFileSystemInfo
     {
         private string name;
 
+        /// <summary>
+        /// Creates a new file info from the specified path.
+        /// </summary>
+        /// <param name="Filename">Path to the file.</param>
         public UnicodeFileInfo(string Filename)
         {
             if (Filename == null)
@@ -29,6 +36,9 @@ namespace Apex.IO
             path = Filename;
         }
 
+        /// <summary>
+        /// Returns the directory info for the file's parent.
+        /// </summary>
         public UnicodeDirectoryInfo Directory
         {
             get
@@ -37,6 +47,9 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Returns the name of the file's parent.
+        /// </summary>
         public string DirectoryName
         {
             get
@@ -45,7 +58,9 @@ namespace Apex.IO
             }
         }
 
-
+        /// <summary>
+        /// Checks whether this file exists.
+        /// </summary>
         public override bool Exists
         {
             get
@@ -70,6 +85,9 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Gets the size of this file in bytes.
+        /// </summary>
         public long Length
         {
             get
@@ -86,25 +104,31 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Checks whether this file is readonly.
+        /// </summary>
         public bool IsReadOnly
         {
             get
             {
-                return (Attributes & System.IO.FileAttributes.ReadOnly) != 0;
+                return (Attributes & FileAttributes.ReadOnly) != 0;
             }
             set
             {
                 if (value)
                 {
-                    Attributes |= System.IO.FileAttributes.ReadOnly;
+                    Attributes |= FileAttributes.ReadOnly;
                 }
                 else
                 {
-                    Attributes &= ~System.IO.FileAttributes.ReadOnly;
+                    Attributes &= ~FileAttributes.ReadOnly;
                 }
             }
         }
 
+        /// <summary>
+        /// Returns the name of the file.
+        /// </summary>
         public override string Name
         {
             get
@@ -113,11 +137,20 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Opens this file to append text and returns a stream writer.
+        /// </summary>
+        /// <returns>Stream writer to this file.</returns>
         public StreamWriter AppendText()
         {
             return UnicodeFile.AppendText(path);
         }
 
+        /// <summary>
+        /// Copies this file to a new location.
+        /// </summary>
+        /// <param name="NewFileName">The new filename.</param>
+        /// <returns>The file info of the new file.</returns>
         public UnicodeFileInfo CopyTo(string NewFileName)
         {
             if (NewFileName == null)
@@ -132,6 +165,12 @@ namespace Apex.IO
             return CopyTo(NewFileName, false);
         }
 
+        /// <summary>
+        /// Copies this file to a new location and optionally overwrites if the file exists.
+        /// </summary>
+        /// <param name="NewFileName">The new filename.</param>
+        /// <param name="Overwrite">Whether to overwrite if the file exists.</param>
+        /// <returns>The file info of the new file.</returns>
         public UnicodeFileInfo CopyTo(string NewFileName, bool Overwrite)
         {
             if (NewFileName == null)
@@ -146,21 +185,35 @@ namespace Apex.IO
             return new UnicodeFileInfo(UnicodeFile.InternalCopy(path, NewFileName, Overwrite));
         }
 
+        /// <summary>
+        /// Creates this file and opens a file stream.
+        /// </summary>
+        /// <returns>File stream to this file.</returns>
         public FileStream Create()
         {
             return File.Create(path);
         }
 
+        /// <summary>
+        /// Creates this file and opens it for writing text.
+        /// </summary>
+        /// <returns>Stream writer to this file.</returns>
         public StreamWriter CreateText()
         {
             return File.CreateText(path);
         }
 
+        /// <summary>
+        /// Decrypts this file using the user's account credentials.
+        /// </summary>
         public void Decrypt()
         {
             File.Decrypt(path);
         }
 
+        /// <summary>
+        /// Deletes this file.
+        /// </summary>
         public override void Delete()
         {
             var success = Win32Wrapper.DeleteFile(path);
@@ -176,11 +229,18 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Encrypts this file using the user's account credentials.
+        /// </summary>
         public void Encrypt()
         {
             File.Encrypt(path);
         }
 
+        /// <summary>
+        /// Moves this file to a new location.
+        /// </summary>
+        /// <param name="NewFileName">The new filename.</param>
         public void MoveTo(string NewFileName)
         {
             if (NewFileName == null)
@@ -201,45 +261,88 @@ namespace Apex.IO
             dataInitialised = -1;
         }
 
+        /// <summary>
+        /// Opens this file with the specified file mode.
+        /// </summary>
+        /// <param name="FileMode">The file mode to use.</param>
+        /// <returns>File stream to this file.</returns>
         public FileStream Open(FileMode FileMode)
         {
             return UnicodeFile.Open(path, FileMode);
         }
 
+        /// <summary>
+        /// Opens this file with the specified file mode and file access.
+        /// </summary>
+        /// <param name="FileMode">The file mode to use.</param>
+        /// <param name="FileAccess">The file access to use.</param>
+        /// <returns>File stream to this file.</returns>
         public FileStream Open(FileMode FileMode, FileAccess FileAccess)
         {
             return UnicodeFile.Open(path, FileMode, FileAccess);
         }
 
+        /// <summary>
+        /// Opens this file with the specified file mode, file access, and file share options.
+        /// </summary>
+        /// <param name="FileMode">The file mode to use.</param>
+        /// <param name="FileAccess">The file access to use.</param>
+        /// <param name="FileShare">The file share to use.</param>
+        /// <returns>File stream to this file.</returns>
         public FileStream Open(FileMode FileMode, FileAccess FileAccess, FileShare FileShare)
         {
             return UnicodeFile.Open(path, FileMode, FileAccess, FileShare);
         }
 
+        /// <summary>
+        /// Opens this file for reading.
+        /// </summary>
+        /// <returns>File stream to this file.</returns>
         public FileStream OpenRead()
         {
             return UnicodeFile.OpenRead(path);
         }
 
+        /// <summary>
+        /// Opens this file for reading text.
+        /// </summary>
+        /// <returns>Stream reader to this file.</returns>
         public StreamReader OpenText()
         {
             return UnicodeFile.OpenText(path);
         }
 
+        /// <summary>
+        /// Opens this file for writing.
+        /// </summary>
+        /// <returns>File strema to this file.</returns>
         public FileStream OpenWrite()
         {
             return UnicodeFile.OpenWrite(path);
         }
 
+        /// <summary>
+        /// Replaces another file with this one and optionally moves the old file to a backup.
+        /// </summary>
+        /// <param name="NewFileName">New filename.</param>
+        /// <param name="BackupFilename">Backup filename.</param>
+        /// <returns>File info of the new file.</returns>
         public UnicodeFileInfo Replace(string NewFileName, string BackupFilename)
         {
             return Replace(NewFileName, BackupFilename, false);
         }
 
-        public UnicodeFileInfo Replace(string NewFileNAme, string BackupFilename, bool IgnoreMetadataErrors)
+        /// <summary>
+        /// Replaces another file with this one and optionally moves the old file to a backup and optionally ignoring metadata errors.
+        /// </summary>
+        /// <param name="NewFileName">New filename.</param>
+        /// <param name="BackupFilename">Backup filename.</param>
+        /// <param name="IgnoreMetadataErrors">Whether to ignore metadata errors.</param>
+        /// <returns></returns>
+        public UnicodeFileInfo Replace(string NewFileName, string BackupFilename, bool IgnoreMetadataErrors)
         {
-            UnicodeFile.Replace(path, NewFileNAme, BackupFilename, IgnoreMetadataErrors);
-            return new UnicodeFileInfo(NewFileNAme);
+            UnicodeFile.Replace(path, NewFileName, BackupFilename, IgnoreMetadataErrors);
+            return new UnicodeFileInfo(NewFileName);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Apex.IO
             {
                 if (_winIOError0 == null)
                 {
-                    _winIOError0 = netClass.GetMethod("WinIOError", flags, null, new Type[] { }, null);
+                    _winIOError0 = netClass.GetMethod(nameof(WinIOError), flags, null, new Type[] { }, null);
                 }
 
                 return _winIOError0;
@@ -48,7 +48,7 @@ namespace Apex.IO
             {
                 if (_winIOError2 == null)
                 {
-                    _winIOError2 = netClass.GetMethod("WinIOError", flags, null, new Type[] { typeof(int), typeof(string) }, null);
+                    _winIOError2 = netClass.GetMethod(nameof(WinIOError), flags, null, new Type[] { typeof(int), typeof(string) }, null);
                 }
 
                 return _winIOError2;
@@ -62,7 +62,7 @@ namespace Apex.IO
             {
                 if (_endOfFile == null)
                 {
-                    _endOfFile = netClass.GetMethod("EndOfFile", flags, null, new Type[] { }, null);
+                    _endOfFile = netClass.GetMethod(nameof(EndOfFile), flags, null, new Type[] { }, null);
                 }
 
                 return _endOfFile;

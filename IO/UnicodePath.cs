@@ -9,7 +9,10 @@ using System.Reflection;
 
 namespace Apex.IO
 {
-    public class UnicodePath
+    /// <summary>
+    /// Static methods for working with full ~32000 path lengths.
+    /// </summary>
+    public static class UnicodePath
     {
         internal const int MAX_PATH = 32000;
 
@@ -19,8 +22,17 @@ namespace Apex.IO
         private static MethodInfo CheckSearchPatternMethod;
         private static MethodInfo IsDirectorySeparatorMethod;
 
+        /// <summary>
+        /// The '\' character on Windows.
+        /// </summary>
         public static char DirectorySeparatorChar = Path.DirectorySeparatorChar;
+        /// <summary>
+        /// The '/' character on Windows.
+        /// </summary>
         public static char AltDirectorySeparatorChar = Path.AltDirectorySeparatorChar;
+        /// <summary>
+        /// The '\' character on Windows.
+        /// </summary>
         public static char VolumeSeparatorChar = Path.VolumeSeparatorChar;
         
         /// <summary>
@@ -55,6 +67,11 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Gets just the filename part of a path.
+        /// </summary>
+        /// <param name="FileName">Path to the file to get the filename of.</param>
+        /// <returns>The filename of the file.</returns>
         public static string GetFileName(string FileName)
         {
             if (FileName == null)
@@ -83,6 +100,11 @@ namespace Apex.IO
             return FileName;
         }
 
+        /// <summary>
+        /// Gets the filename without the extension.
+        /// </summary>
+        /// <param name="FileName">Path to the file.</param>
+        /// <returns>Filename without extension.</returns>
         public static string GetFileNameWithoutExtension(string FileName)
         {
             FileName = GetFileName(FileName);
@@ -95,6 +117,11 @@ namespace Apex.IO
             return index == -1 ? FileName : FileName.Substring(0, index);
         }
 
+        /// <summary>
+        /// Gest the name of the directory.
+        /// </summary>
+        /// <param name="FileName">Path to the file.</param>
+        /// <returns>The directory.</returns>
         public static string GetDirectoryName(string FileName)
         {
             if (FileName != null)
@@ -115,6 +142,11 @@ namespace Apex.IO
             return null;
         }
 
+        /// <summary>
+        /// Gets the root of a path.
+        /// </summary>
+        /// <param name="FileName">Path.</param>
+        /// <returns>Root of the path.</returns>
         public static string GetPathRoot(string FileName)
         {
             if (FileName == null)

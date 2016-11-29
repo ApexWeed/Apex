@@ -14,7 +14,7 @@ using System.Security.Permissions;
 namespace Apex.IO
 {
     /// <summary>
-    /// UnicodeConstants is an awful name for values that aren't consant.
+    /// Some static content for the long path support.
     /// </summary>
     public static class UnicodeStatic
     {
@@ -149,51 +149,11 @@ namespace Apex.IO
             }
         }
 
-        public static object FileAttributeDataToNative(Win32Wrapper.WIN32_FILE_ATTRIBUTE_DATA Data)
-        {
-            var nativeFields = WIN32_FILE_ATTRIBUTE_DATA_NativeFields;
-            var apexFields = WIN32_FILE_ATTRIBUTE_DATA_ApexFields;
-
-            if (nativeFields.Length != apexFields.Length)
-            {
-                throw new MissingFieldException("Apex and native WIN32_FILE_ATTRIBUTE_DATA structs are different.");
-            }
-
-            var result = FormatterServices.GetUninitializedObject(WIN32_FILE_ATTRIBUTE_DATA);
-
-            for (int i = 0; i < nativeFields.Length; i++)
-            {
-                nativeFields[i].SetValueDirect(__makeref(result), apexFields[i].GetValue(Data));
-            }
-
-            return result;
-        }
-
-        public static Win32Wrapper.WIN32_FILE_ATTRIBUTE_DATA FileAttributeDataToApex(object Data)
-        {
-            if (Data.GetType() != WIN32_FILE_ATTRIBUTE_DATA)
-            {
-                throw new ArgumentException($"{Data.GetType().FullName} passed to FileAttributeDataToApex, expected: {WIN32_FILE_ATTRIBUTE_DATA.FullName}");
-            }
-
-            var nativeFields = WIN32_FILE_ATTRIBUTE_DATA_NativeFields;
-            var apexFields = WIN32_FILE_ATTRIBUTE_DATA_ApexFields;
-
-            if (nativeFields.Length != apexFields.Length)
-            {
-                throw new MissingFieldException("Apex and native WIN32_FILE_ATTRIBUTE_DATA structs are different.");
-            }
-
-            var result = new Win32Wrapper.WIN32_FILE_ATTRIBUTE_DATA();
-
-            for (int i = 0; i < nativeFields.Length; i++)
-            {
-                apexFields[i].SetValueDirect(__makeref(result), nativeFields[i].GetValue(Data));
-            }
-
-            return result;
-        }
-
+        /// <summary>
+        /// Converts fileshare to security attributes.
+        /// </summary>
+        /// <param name="Share">File share to convert.</param>
+        /// <returns>Security attributes.</returns>
         public static Win32Wrapper.SECURITY_ATTRIBUTES GetSecurityAttributes(FileShare Share)
         {
             Win32Wrapper.SECURITY_ATTRIBUTES secAttrs = null;

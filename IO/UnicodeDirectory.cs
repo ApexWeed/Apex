@@ -3,17 +3,29 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Security.Permissions;
 using Apex.Win32;
 using System.Runtime.InteropServices;
 
 namespace Apex.IO
 {
+    /// <summary>
+    /// Provides functions dealing with directories with support for full ~32000 character NTFS path length.
+    /// </summary>
     public static class UnicodeDirectory
     {
+        /// <summary>
+        /// Creates a directory and returns the DirectoryInfo object associated with it.
+        /// </summary>
+        /// <param name="Path">Path to the directory to create.</param>
+        /// <returns>DirectoryInfo object for the created directory.</returns>
         public static DirectoryInfo CreateDirectory(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             InternalCreateDirectory(Path);
 
             return new DirectoryInfo(Path);
@@ -101,13 +113,32 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Deletes the specified directory. Throws if the directory is not empty.
+        /// </summary>
+        /// <param name="Path">Path to the directory to delete.</param>
         public static void Delete(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             Delete(Path, false);
         }
 
+        /// <summary>
+        /// Deletes the specfied directory.
+        /// </summary>
+        /// <param name="Path">Path to the directory to delete.</param>
+        /// <param name="Recursive">Whether to recurse.</param>
         public static void Delete(string Path, bool Recursive)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             var data = new Win32Wrapper.WIN32_FILE_ATTRIBUTE_DATA();
             var dataInitialised = UnicodeFile.FillAttributeInfo(Path, ref data, true);
             if (dataInitialised != 0)
@@ -286,16 +317,48 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Enumerates directories in the specified path without descending into subdirectories.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <returns>IEnumerable of directory names.</returns>
         public static IEnumerable<string> EnumerateDirectories(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             return EnumerateDirectories(Path, "*", SearchOption.TopDirectoryOnly);
         }
 
+        /// <summary>
+        /// Enumerates directories in the specified path without descending into subdirectories using the specified search pattern.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <param name="SearchPattern">Search pattern to use when enumerating.</param>
+        /// <returns>IEnumerable of directory names.</returns>
         public static IEnumerable<string> EnumerateDirectories(string Path, string SearchPattern)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (SearchPattern == null)
+            {
+                throw new ArgumentNullException(nameof(SearchPattern));
+            }
+
             return EnumerateDirectories(Path, SearchPattern, SearchOption.TopDirectoryOnly);
         }
 
+        /// <summary>
+        /// Enumerates directories in the specified path using the specified search pattern and search option.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <param name="SearchPattern">Search pattern to use.</param>
+        /// <param name="SearchOption">Search option to use.</param>
+        /// <returns>IEnumerable of directory names.</returns>
         public static IEnumerable<string> EnumerateDirectories(string Path, string SearchPattern, SearchOption SearchOption)
         {
             if (Path == null)
@@ -310,16 +373,48 @@ namespace Apex.IO
             return UnicodeFileSystemEnumerableFactory.CreateFileNameIterator(Path, SearchPattern, false, true, SearchOption);
         }
 
+        /// <summary>
+        /// Enumerates files in the specified path without descending into subdirectories.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <returns>IEnumerable of file names.</returns>
         public static IEnumerable<string> EnumerateFiles(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             return EnumerateFiles(Path, "*", SearchOption.TopDirectoryOnly);
         }
 
+        /// <summary>
+        /// Enumerates files in the specified path without descending into subdirectories using the specified search pattern.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <param name="SearchPattern">The search pattern to use.</param>
+        /// <returns>IEnumerable of file names.</returns>
         public static IEnumerable<string> EnumerateFiles(string Path, string SearchPattern)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (SearchPattern == null)
+            {
+                throw new ArgumentNullException(nameof(SearchPattern));
+            }
+
             return EnumerateFiles(Path, SearchPattern, SearchOption.TopDirectoryOnly);
         }
 
+        /// <summary>
+        /// Enumerates files in the specified path with the specified search pattern and search option.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <param name="SearchPattern">The search pattern to use.</param>
+        /// <param name="SearchOption">The search option to use.</param>
+        /// <returns>IEnumerable of file names.</returns>
         public static IEnumerable<string> EnumerateFiles(string Path, string SearchPattern, SearchOption SearchOption)
         {
             if (Path == null)
@@ -334,16 +429,48 @@ namespace Apex.IO
             return UnicodeFileSystemEnumerableFactory.CreateFileNameIterator(Path, SearchPattern, true, false, SearchOption);
         }
 
+        /// <summary>
+        /// Enumerates file system entries in the specifed path without descending into subdirectories.
+        /// </summary>
+        /// <param name="Path">The path to the directory to enumerate.</param>
+        /// <returns>IEnumerable of file system entry names.</returns>
         public static IEnumerable<string> EnumerateFileSystemEntries(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             return EnumerateFileSystemEntries(Path, "*", SearchOption.TopDirectoryOnly);
         }
 
+        /// <summary>
+        /// Enumerates file system entries in the specified path without descending into subdirectories using the specified search pattern.
+        /// </summary>
+        /// <param name="Path">The path to the directory to enumerate.</param>
+        /// <param name="SearchPattern">The search pattern to use.</param>
+        /// <returns>IEnumerable of file system entry names.</returns>
         public static IEnumerable<string> EnumerateFileSystemEntries(string Path, string SearchPattern)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (SearchPattern == null)
+            {
+                throw new ArgumentNullException(nameof(SearchPattern));
+            }
+
             return EnumerateFileSystemEntries(Path, SearchPattern, SearchOption.TopDirectoryOnly);
         }
 
+        /// <summary>
+        /// Enumerates file system entries in the specified path with the specified search pattern and search option.
+        /// </summary>
+        /// <param name="Path">The path to the directory to enumerate.</param>
+        /// <param name="SearchPattern">The search pattern to use.</param>
+        /// <param name="SearchOption">The search option to use.</param>
+        /// <returns>IEnumerable of file system entry names.</returns>
         public static IEnumerable<string> EnumerateFileSystemEntries(string Path, string SearchPattern, SearchOption SearchOption)
         {
             if (Path == null)
@@ -358,6 +485,11 @@ namespace Apex.IO
             return UnicodeFileSystemEnumerableFactory.CreateFileNameIterator(Path, SearchPattern, true, true, SearchOption);
         }
 
+        /// <summary>
+        /// Checks whether the specified folder exists on disk. Returns false for files.
+        /// </summary>
+        /// <param name="Path">The path to check.</param>
+        /// <returns>True if the directory exists, false otherwise.</returns>
         public static bool Exists(string Path)
         {
             if (Path == null)
@@ -375,16 +507,40 @@ namespace Apex.IO
             return (error == 0 && data.fileAttributes != -1 && (data.fileAttributes & Win32Wrapper.FILE_ATTRIBUTE_DIRECTORY) != 0);
         }
 
+        /// <summary>
+        /// Gets the creation time of the specified directory in local time.
+        /// </summary>
+        /// <param name="Path">Path to the directory to check.</param>
+        /// <returns>Creation time in local time.</returns>
         public static DateTime GetCreationTime(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             return GetCreationTimeUtc(Path).ToLocalTime();
         }
 
+        /// <summary>
+        /// Gets the creation time of the specified directory in UTC.
+        /// </summary>
+        /// <param name="Path">Path to the directory to check.</param>
+        /// <returns>Creation time in UTC.</returns>
         public static DateTime GetCreationTimeUtc(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             return UnicodeFile.GetCreationTimeUtc(Path);
         }
 
+        /// <summary>
+        /// Gets the current working directory for the application.
+        /// </summary>
+        /// <returns>Current working directory.</returns>
         public static string GetCurrentDirectory()
         {
             var sb = new StringBuilder(UnicodePath.MAX_PATH + 1);
@@ -420,84 +576,266 @@ namespace Apex.IO
             return currentDirectory;
         }
 
+        /// <summary>
+        /// Gets all the directories in the specified path without descending into subdirectories.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <returns>Array of directory names.</returns>
         public static string[] GetDirectories(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             return EnumerateDirectories(Path).ToArray();
         }
 
+        /// <summary>
+        /// Gets all the directories in the specified path without descending into subdirectories using the specified search pattern.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <param name="SearchPattern">Search pattern to use.</param>
+        /// <returns>Array of directory names.</returns>
         public static string[] GetDirectories(string Path, string SearchPattern)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (SearchPattern == null)
+            {
+                throw new ArgumentNullException(nameof(SearchPattern));
+            }
+
             return EnumerateDirectories(Path, SearchPattern).ToArray();
         }
 
+        /// <summary>
+        /// Gets all the directories in the specified path with the specified search pattern and search option.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <param name="SearchPattern">The search pattern to use.</param>
+        /// <param name="SearchOption">The search option to use.</param>
+        /// <returns>Array of directory names.</returns>
         public static string[] GetDirectories(string Path, string SearchPattern, SearchOption SearchOption)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (SearchPattern == null)
+            {
+                throw new ArgumentNullException(nameof(SearchPattern));
+            }
+
             return EnumerateDirectories(Path, SearchPattern, SearchOption).ToArray();
         }
 
+        /// <summary>
+        /// Get's the directory root for the specified directory.
+        /// </summary>
+        /// <param name="Path">Path to the directory.</param>
+        /// <returns>Directory root.</returns>
         public static string GetDirectoryRoot(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             var fullPath = UnicodePath.NormalisePath(Path, true);
             var root = fullPath.Substring(0, UnicodePath.GetRootLength(fullPath));
 
             return root;
         }
 
+        /// <summary>
+        /// Gets all the files in the specified path without descending into subdirectories.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <returns>Array of file names.</returns>
         public static string[] GetFiles(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             return EnumerateFiles(Path).ToArray();
         }
 
+        /// <summary>
+        /// Gets all the files in the specifed path without descending into subdirectories using the specified search pattern.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <param name="SearchPattern">The search pattern to use.</param>
+        /// <returns>Array of files names.</returns>
         public static string[] GetFiles(string Path, string SearchPattern)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (SearchPattern == null)
+            {
+                throw new ArgumentNullException(nameof(SearchPattern));
+            }
+
             return EnumerateFiles(Path, SearchPattern).ToArray();
         }
 
+        /// <summary>
+        /// Gets all the files in the specified path using the specified search pattern and search option.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <param name="SearchPattern">The search pattern to use.</param>
+        /// <param name="SearchOption">The search option to use.</param>
+        /// <returns>Array of file names.</returns>
         public static string[] GetFiles(string Path, string SearchPattern, SearchOption SearchOption)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (SearchPattern == null)
+            {
+                throw new ArgumentNullException(nameof(SearchPattern));
+            }
+
             return EnumerateFiles(Path, SearchPattern, SearchOption).ToArray();
         }
 
+        /// <summary>
+        /// Gets all the file system entries in the specified path without descending into subdirectories.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <returns>Array of file system entry names.</returns>
         public static string[] GetFileSystemEntries(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             return EnumerateFileSystemEntries(Path).ToArray();
         }
 
+        /// <summary>
+        /// Gets all the file system entries in the specified path without descending into subdirectories using the specified search pattern.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <param name="SearchPattern">The search pattern to use.</param>
+        /// <returns>Array of file system entry names.</returns>
         public static string[] GetFileSystemEntries(string Path, string SearchPattern)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (SearchPattern == null)
+            {
+                throw new ArgumentNullException(nameof(SearchPattern));
+            }
+
             return EnumerateFileSystemEntries(Path, SearchPattern).ToArray();
         }
 
+        /// <summary>
+        /// Gets all the file system entries in the specified path using the specified search pattern and search option.
+        /// </summary>
+        /// <param name="Path">Path to the directory to enumerate.</param>
+        /// <param name="SearchPattern">The search pattern to use.</param>
+        /// <param name="SearchOption">The search option to use.</param>
+        /// <returns>Array of file system entry names.</returns>
         public static string[] GetFileSystemEntries(string Path, string SearchPattern, SearchOption SearchOption)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (SearchPattern == null)
+            {
+                throw new ArgumentNullException(nameof(SearchPattern));
+            }
+
             return EnumerateFileSystemEntries(Path, SearchPattern, SearchOption).ToArray();
         }
 
+        /// <summary>
+        /// Gets the last access time for the specified directory in local time.
+        /// </summary>
+        /// <param name="Path">Path to the directory to check.</param>
+        /// <returns>Last access time in local time.</returns>
         public static DateTime GetLastAccessTime(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             return GetLastAccessTimeUtc(Path).ToLocalTime();
         }
 
+        /// <summary>
+        /// Gets the last access time for the specifed directory in UTC.
+        /// </summary>
+        /// <param name="Path">Path to the directory to check.</param>
+        /// <returns>Last access time in UTC></returns>
         public static DateTime GetLastAccessTimeUtc(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             return UnicodeFile.GetLastAccessTimeUtc(Path);
         }
 
+        /// <summary>
+        /// Gets the last write time for the specified directory in local time.
+        /// </summary>
+        /// <param name="Path">Path to the directory to check.</param>
+        /// <returns>Last write time in local time.</returns>
         public static DateTime GetLastWriteTime(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             return GetLastWriteTimeUtc(Path).ToLocalTime();
         }
 
+        /// <summary>
+        /// Gets the last write time for the specified directory in UTC.
+        /// </summary>
+        /// <param name="Path">Path to the directory to check.</param>
+        /// <returns>Last write time in UTC.</returns>
         public static DateTime GetLastWriteTimeUtc(string Path)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+
             return UnicodeFile.GetLastWriteTimeUtc(Path);
         }
 
+        /// <summary>
+        /// Gets the logical drives on the machine.
+        /// </summary>
+        /// <returns>Array of drive roots.</returns>
         public static string[] GetLogicalDrives()
         {
             return Directory.GetLogicalDrives();
         }
 
+        /// <summary>
+        /// Gets the DirectoryInfo for the parent directory.
+        /// </summary>
+        /// <param name="Path">Path to the directory to get the parent of.</param>
+        /// <returns>DirectoryInfo of the parent directory.</returns>
         public static DirectoryInfo GetParent(string Path)
         {
             if (Path == null)
@@ -516,6 +854,11 @@ namespace Apex.IO
             return parent == null ? null : new DirectoryInfo(parent);
         }
 
+        /// <summary>
+        /// Moves the specified source folder to a new location. Folders cannot be copied across device boundaries.
+        /// </summary>
+        /// <param name="SourceDirectory">Path to the directory to move.</param>
+        /// <param name="DestinationDirectory">Path to the new directory location.</param>
         public static void Move(string SourceDirectory, string DestinationDirectory)
         {
             if (SourceDirectory == null)
@@ -578,16 +921,48 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Sets the creation time of the specfied directory in local time.
+        /// </summary>
+        /// <param name="Path">Path to the directory to change.</param>
+        /// <param name="CreationTime">Creation time in local time.</param>
         public static void SetCreationTime(string Path, DateTime CreationTime)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (CreationTime == null)
+            {
+                throw new ArgumentNullException(nameof(CreationTime));
+            }
+
             SetCreationTimeUtc(Path, CreationTime.ToUniversalTime());
         }
 
+        /// <summary>
+        /// Sets the creation time of the specified directory in UTC.
+        /// </summary>
+        /// <param name="Path">Path to the directroy to change.</param>
+        /// <param name="CreationTimeUtc">Creation time in UTC.</param>
         public static void SetCreationTimeUtc(string Path, DateTime CreationTimeUtc)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (CreationTimeUtc == null)
+            {
+                throw new ArgumentNullException(nameof(CreationTimeUtc));
+            }
+
             UnicodeFile.SetCreationTimeUtc(Path, CreationTimeUtc);
         }
 
+        /// <summary>
+        /// Sets the current working directory for the application.
+        /// </summary>
+        /// <param name="Path">Path to set as the current working directory.</param>
         public static void SetCurrentDirectory(string Path)
         {
             if (Path == null)
@@ -614,23 +989,79 @@ namespace Apex.IO
             }
         }
 
+        /// <summary>
+        /// Sets the last access time for the specified directory in local time.
+        /// </summary>
+        /// <param name="Path">Path to the directory to change.</param>
+        /// <param name="LastAccessTime">Last access time in local time.</param>
         public static void SetLastAccessTime(string Path, DateTime LastAccessTime)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (LastAccessTime == null)
+            {
+                throw new ArgumentNullException(nameof(LastAccessTime));
+            }
+
             SetLastAccessTimeUtc(Path, LastAccessTime.ToUniversalTime());
         }
 
+        /// <summary>
+        /// Sets the last access time for the specified directory in UTC.
+        /// </summary>
+        /// <param name="Path">Path to the directory to change.</param>
+        /// <param name="LastAccessTimeUtc">Last access time in UTC.</param>
         public static void SetLastAccessTimeUtc(string Path, DateTime LastAccessTimeUtc)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (LastAccessTimeUtc == null)
+            {
+                throw new ArgumentNullException(nameof(LastAccessTimeUtc));
+            }
+
             UnicodeFile.SetLastAccessTimeUtc(Path, LastAccessTimeUtc);
         }
 
+        /// <summary>
+        /// Sets the last write time for the specified directory in local time.
+        /// </summary>
+        /// <param name="Path">Path to the directory to change.</param>
+        /// <param name="LastWriteTime">Last write time in local time.</param>
         public static void SetLastWriteTime(string Path, DateTime LastWriteTime)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (LastWriteTime == null)
+            {
+                throw new ArgumentNullException(nameof(LastWriteTime));
+            }
+
             SetLastWriteTimeUtc(Path, LastWriteTime.ToUniversalTime());
         }
 
+        /// <summary>
+        /// Sets the last write time for the specified directory in UTC.
+        /// </summary>
+        /// <param name="Path">Path to the directory to change.</param>
+        /// <param name="LastWriteTimeUtc">Last write time in UTC.</param>
         public static void SetLastWriteTimeUtc(string Path, DateTime LastWriteTimeUtc)
         {
+            if (Path == null)
+            {
+                throw new ArgumentNullException(nameof(Path));
+            }
+            if (LastWriteTimeUtc == null)
+            {
+                throw new ArgumentNullException(nameof(LastWriteTimeUtc));
+            }
+
             UnicodeFile.SetLastWriteTimeUtc(Path, LastWriteTimeUtc);
         }
     }
