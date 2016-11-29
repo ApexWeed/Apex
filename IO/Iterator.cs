@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Apex.IO
@@ -12,7 +14,7 @@ namespace Apex.IO
         internal int state;
         internal TSource current;
 
-        public Iterator()
+        protected Iterator()
         {
             threadId = Thread.CurrentThread.ManagedThreadId;
         }
@@ -44,7 +46,7 @@ namespace Apex.IO
                 return this;
             }
 
-            Iterator<TSource> duplicate = Clone();
+            var duplicate = Clone();
             duplicate.state = 1;
             return duplicate;
         }

@@ -10,12 +10,21 @@ namespace Apex
     public static class OpenEnvironment
     {
         private static BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Static;
+        private static MethodInfo GetResourceStringMethod;
 
         public static string GetResourceString(string Key)
         {
-            var methodInfo = typeof(Environment).GetMethod(nameof(GetResourceString), flags, null, new Type[] { typeof(string) }, null);
+            if (GetResourceStringMethod == null)
+            {
+                GetResourceStringMethod = typeof(Environment).GetMethod(nameof(GetResourceString), flags, null, new Type[] { typeof(string) }, null);
+            }
 
-            return (string)methodInfo.Invoke(null, new object[] { Key });
+            return (string)GetResourceStringMethod.Invoke(null, new object[] { Key });
+        }
+
+        public static string GetResourceString(string Key, params object[] Values)
+        {
+            return string.Format(GetResourceString(Key), Values);
         }
     }
 }

@@ -266,7 +266,14 @@ namespace Apex.Win32
         internal static extern bool FindClose(IntPtr handle);
 
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        internal static extern SafeFindHandle FindFirstFile(string lpFileName, WIN32_FIND_DATA lpFindFileData);
+        internal static extern SafeFindHandle FindFirstFile(string lpFileName, 
+            [In, Out]
+            WIN32_FIND_DATA lpFindFileData);
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        internal static extern bool FindNextFile(SafeFindHandle hndFindFile, 
+            [In, Out, MarshalAs(UnmanagedType.LPStruct)]
+            WIN32_FIND_DATA lpFindFileData);
 
         [DllImport("kernel32.dll", SetLastError = false, EntryPoint = "SetErrorMode", ExactSpelling = true)]
         private static extern int SetErrorMode_VistaAndOlder(int newMode);
@@ -302,6 +309,12 @@ namespace Apex.Win32
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
         internal static extern int GetFileType(SafeFileHandle handle);
 
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        internal static extern int GetCurrentDirectory(int nBufferLength, [Out]StringBuilder lpBuffer);
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        internal static extern int GetLongPathName(string Path, [Out]StringBuilder LongPathBuffer, int BufferLength);
+
         // Do not use these directly, use the safe or unsafe versions above.
         // The safe version does not support devices (aka if will only open
         // files on disk), while the unsafe version give you the full semantic
@@ -315,6 +328,18 @@ namespace Apex.Win32
             System.IO.FileMode dwCreationDisposition,
             int dwFlagsAndAttributes,
             IntPtr hTemplateFile);
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool CreateDirectory(string Path, SECURITY_ATTRIBUTES lpSecurityAttributes);
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool RemoveDirectory(string Path);
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool SetCurrentDirectory(string Path);
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool DeleteVolumeMountPoint(string Path);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern bool DecryptFile(string Path, int ReservedMustBeZero = 0);
@@ -349,6 +374,11 @@ namespace Apex.Win32
             }
 
             return handle;
+        }
+
+        internal static int MakeHRFromErrorCode(int ErrorCode)
+        {
+            return unchecked(((int)0x80070000) | ErrorCode);
         }
         #endregion
     }

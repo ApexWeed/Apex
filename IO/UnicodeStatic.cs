@@ -9,6 +9,7 @@ using System.Runtime.Serialization;
 using Microsoft.Win32;
 using Apex.Win32;
 using System.Runtime.InteropServices;
+using System.Security.Permissions;
 
 namespace Apex.IO
 {
@@ -114,6 +115,21 @@ namespace Apex.IO
             }
         }
 
+        private static Dictionary<string, ConstructorInfo> constructors = new Dictionary<string, ConstructorInfo>();
+
+        private static ConstructorInfo fileIOPermission4
+        {
+            get
+            {
+                if (!constructors.ContainsKey(nameof(fileIOPermission4)))
+                {
+                    constructors.Add(nameof(fileIOPermission4), typeof(FileIOPermission).GetConstructor(flags, null, new Type[] { typeof(FileIOPermissionAccess), typeof(string).MakeArrayType(), typeof(bool), typeof(bool) }, null));
+                }
+
+                return constructors[nameof(fileIOPermission4)];
+            }
+        }
+
         private static int win10PathExtensionEnabled = -1;
         /// <summary>
         /// Returns whether the Windows 10 long path extensions are enabled.
@@ -191,6 +207,12 @@ namespace Apex.IO
             }
 
             return secAttrs;
+        }
+
+        internal static void DemandIOPermission(FileIOPermissionAccess Access, string[] Pathlist, bool CheckForDuplicates, bool NeedFullPath)
+        {
+            var perms = (FileIOPermission)fileIOPermission4.Invoke(new object[] { Access, Pathlist, CheckForDuplicates, NeedFullPath });
+            perms.Demand();
         }
     }
 }

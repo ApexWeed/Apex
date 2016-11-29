@@ -64,9 +64,17 @@
     <Compile Include="Formatting.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InputFiltering.cs" />
+    <Compile Include="IO\Iterator.cs" />
+    <Compile Include="IO\UnicodeDirectory.cs" />
+    <Compile Include="IO\UnicodeDirectoryInfo.cs" />
+    <Compile Include="IO\UnicodeFileInfo.cs" />
+    <Compile Include="IO\UnicodeFileSystemEnumerable.cs" />
+    <Compile Include="IO\UnicodeFileSystemInfo.cs" />
+    <Compile Include="IO\UnicodeReadLinesIterator.cs" />
     <Compile Include="IO\UnicodeStatic.cs" />
     <Compile Include="IO\UnicodeFile.cs" />
     <Compile Include="IO\UnicodePath.cs" />
+    <Compile Include="IO\__Error.cs" />
     <Compile Include="Layout\LayoutEndStub.cs" />
     <Compile Include="Layout\LayoutEngine.cs" />
     <Compile Include="Layout\LayoutItem.cs" />

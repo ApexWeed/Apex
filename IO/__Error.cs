@@ -34,7 +34,7 @@ namespace Apex.IO
             {
                 if (_winIOError0 == null)
                 {
-                    netClass.GetMethod("WinIOError", flags, null, new Type[] { }, null);
+                    _winIOError0 = netClass.GetMethod("WinIOError", flags, null, new Type[] { }, null);
                 }
 
                 return _winIOError0;
@@ -46,9 +46,9 @@ namespace Apex.IO
         {
             get
             {
-                if (_winIOError0 == null)
+                if (_winIOError2 == null)
                 {
-                    netClass.GetMethod("WinIOError", flags, null, new Type[] { typeof(int), typeof(string) }, null);
+                    _winIOError2 = netClass.GetMethod("WinIOError", flags, null, new Type[] { typeof(int), typeof(string) }, null);
                 }
 
                 return _winIOError2;

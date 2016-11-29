@@ -94,6 +94,23 @@ namespace Apex.IO
 
         public static void Copy(string SourceFilename, string DestinationFilename)
         {
+            if (SourceFilename == null)
+            {
+                throw new ArgumentNullException(nameof(SourceFilename), OpenEnvironment.GetResourceString("ArgumentNull_FileName"));
+            }
+            if (DestinationFilename == null)
+            {
+                throw new ArgumentNullException(nameof(DestinationFilename), OpenEnvironment.GetResourceString("ArgumentNull_FileName"));
+            }
+            if (SourceFilename.Length == 0)
+            {
+                throw new ArgumentException(OpenEnvironment.GetResourceString("Argument_EmptyFileName"), nameof(SourceFilename));
+            }
+            if (DestinationFilename.Length == 0)
+            {
+                throw new ArgumentException(OpenEnvironment.GetResourceString("Argument_EmptyFileName"), nameof(DestinationFilename));
+            }
+
             Copy(SourceFilename, DestinationFilename, false);
         }
 
@@ -116,14 +133,19 @@ namespace Apex.IO
                 throw new ArgumentException(OpenEnvironment.GetResourceString("Argument_EmptyFileName"), nameof(DestinationFilename));
             }
 
-            var source = UnicodePath.FormatPath(SourceFilename);
-            var dest = UnicodePath.FormatPath(DestinationFilename);
+            InternalCopy(SourceFilename, DestinationFilename, Overwrite);
+        }
+
+        internal static string InternalCopy(string SourceFileName, string DestinationFileName, bool Overwrite)
+        {
+            var source = UnicodePath.FormatPath(SourceFileName);
+            var dest = UnicodePath.FormatPath(DestinationFileName);
             var success = Win32Wrapper.CopyFile(source, dest, !Overwrite);
 
             if (!success)
             {
                 var error = Marshal.GetLastWin32Error();
-                var filename = DestinationFilename;
+                var filename = DestinationFileName;
 
                 if (error != Win32Wrapper.ERROR_FILE_EXISTS)
                 {
@@ -132,7 +154,7 @@ namespace Apex.IO
                     {
                         if (handle.IsInvalid)
                         {
-                            filename = SourceFilename;
+                            filename = SourceFileName;
                         }
                     }
 
@@ -144,6 +166,8 @@ namespace Apex.IO
 
                 __Error.WinIOError(error, filename);
             }
+
+            return UnicodePath.NormalisePath(dest, true);
         }
 
         public static FileStream Create(string Path)
@@ -623,7 +647,7 @@ namespace Apex.IO
             }
         }
 
-        private static int FillAttributeInfo(string Path, ref Win32Wrapper.WIN32_FILE_ATTRIBUTE_DATA Data, bool ReturnErrorOnNotFound)
+        internal static int FillAttributeInfo(string Path, ref Win32Wrapper.WIN32_FILE_ATTRIBUTE_DATA Data, bool ReturnErrorOnNotFound)
         {
             var dataInitialised = 0;
             bool success;
