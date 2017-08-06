@@ -1,0 +1,119 @@
+General
+    Go back and add normalize path to all of file because that actually works with full paths.
+
+File
+    AppendAllLines (x2)                 -
+    AppendAllText (x2)                  -
+    AppendText                          -
+    Copy (x2)                           -
+    Create (x4)                         +1
+    CreateText                          -
+    Decrypt                             -
+    Delete                              -
+    Encrypt                             -
+    Exists                              -
+    GetAccessControl (x2)               +2
+    GetAttributes                       -
+    GetCreationTime                     -
+    GetCreationTimeUtc                  -
+    GetLastAccessTime                   -
+    GetLastAccessTimeUtc                -
+    GetLastWriteTime                    -
+    GetLastWriteTimeUtc                 -
+    Move                                -
+    Open (x3)                           -
+    OpenRead                            -
+    OpenText                            -
+    OpenWrite                           -
+    ReadAllBytes                        -
+    ReadAllLines (x2)                   -
+    ReadAllText (x2)                    -
+    ReadLines (x2)                      -
+    Replace (x2)                        -
+    SetAccessControl                    +1
+    SetAttributes                       -
+    SetCreationTime                     -
+    SetCreationTimeUtc                  -
+    SetLastAccessTime                   -
+    SetLastAccessTimeUtc                -
+    SetLastWriteTime                    -
+    SetLastWriteTimeUtc                 -
+    WriteAllBytes                       -
+    WriteAllLines (x4)                  -
+    WriteAllText (x2)                   -
+
+Directory
+    CreateDirectory (x2)                1+1
+    Delete (x2)                         2
+    EnumerateDirectories (x3)           3
+    EnumerateFiles (x3)                 3
+    EnumerateFileSystemEntries (x3)     3
+    Exists                              1
+    GetAccessControl (x2)               +2
+    GetCreationTime                     1
+    GetCreationTimeUtc                  1
+    GetCurrentDirectory                 1
+    GetDirectories (x2)                 2
+    GetDirectoryRoot                    1
+    GetFiles (x3)                       3
+    GetFileSystemEntries (x3)           3
+    GetLastAccessTime                   1
+    GetLastAccessTimeUtc                1
+    GetLastWriteTime                    1
+    GetLastWriteTimeUtc                 1
+    GetLogicalDrives                    -
+    GetParent                           1
+    Move                                1
+    SetAccessControl                    +1
+    SetCreationTime                     1
+    SetCreationTimeUtc                  1
+    SetCurrentDirectory                 1
+    SetLastAccessTime                   1
+    SetLastAccessTimeUtc                1
+    SetLastWriteTime                    1
+    SetLastWriteTimeUtc                 1
+
+FileSystemInfo
+    Properties
+        Attributes                      1
+        CreationTime                    1
+        CreationTimeUtc                 1
+        Exists                          1
+        Extension                       1
+        FullName                        1
+        LastAccessTime                  1
+        LastAccessTimeUtc               1
+        LastWriteTime                   1
+        LastWriteTimeUtc                1
+        Name                            1
+    Methods
+        Equals                          1
+        GetHashCode                     1
+        Refresh                         1
+
+FileInfo
+    Properties
+        
+    Methods
+        
+
+DirectoryInfo
+    Properties
+        FullName                        1
+        Parent                          1
+        Root                            1
+    Methods
+        Create (x2)                     1+1
+        CreateSubdirectory (x2)         1+1
+        Delete (x2)                     2
+        EnumerateDirectories (x3)       3
+        EnumerateFiles (x3)             3
+        EnumerateFileSystemInfos (x3)   3
+        Equals                          1
+        GetAccessControl (x2)           +2
+        GetDirectories (x3)             3
+        GetFiles (x3)                   3
+        GetFileSystemInfos (x3)         3
+        GetHashCode                     1
+        MoveTo                          1
+        ToString                        1

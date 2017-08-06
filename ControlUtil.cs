@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Apex.Win32;
 
 namespace Apex
 {
@@ -8,7 +9,7 @@ namespace Apex
     {
         public static bool ShowScrollBar(IntPtr WindowHandle, ScrollBarDirection Direction, bool Show)
         {
-            return Win32.ShowScrollBar(WindowHandle, (int)Direction, Show);
+            return Win32Wrapper.ShowScrollBar(WindowHandle, (int)Direction, Show);
         }
 
         public enum ScrollBarDirection
@@ -21,9 +22,9 @@ namespace Apex
 
         public static ScrollBars GetVisibleScrollbars(Control ctl)
         {
-            var wndStyle = Win32.GetWindowLong(ctl.Handle, Win32.GWL_STYLE);
-            var hsVisible = (wndStyle & Win32.WS_HSCROLL) != 0;
-            var vsVisible = (wndStyle & Win32.WS_VSCROLL) != 0;
+            var wndStyle = Win32Wrapper.GetWindowLong(ctl.Handle, Win32Wrapper.GWL_STYLE);
+            var hsVisible = (wndStyle & Win32Wrapper.WS_HSCROLL) != 0;
+            var vsVisible = (wndStyle & Win32Wrapper.WS_VSCROLL) != 0;
 
             if (hsVisible)
                 return vsVisible ? ScrollBars.Both : ScrollBars.Horizontal;

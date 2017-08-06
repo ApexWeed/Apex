@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,6 +50,7 @@
     </Compile>
     <Compile Include="ControlUtil.cs" />
     <Compile Include="EnumUtil.cs" />
+    <Compile Include="Environment.cs" />
     <Compile Include="Extensions\ComboBoxObjectCollectionExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
@@ -63,6 +65,17 @@
     <Compile Include="Formatting.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InputFiltering.cs" />
+    <Compile Include="IO\Iterator.cs" />
+    <Compile Include="IO\UnicodeDirectory.cs" />
+    <Compile Include="IO\UnicodeDirectoryInfo.cs" />
+    <Compile Include="IO\UnicodeFileInfo.cs" />
+    <Compile Include="IO\UnicodeFileSystemEnumerable.cs" />
+    <Compile Include="IO\UnicodeFileSystemInfo.cs" />
+    <Compile Include="IO\UnicodeReadLinesIterator.cs" />
+    <Compile Include="IO\UnicodeStatic.cs" />
+    <Compile Include="IO\UnicodeFile.cs" />
+    <Compile Include="IO\UnicodePath.cs" />
+    <Compile Include="IO\__Error.cs" />
     <Compile Include="Layout\LayoutEndStub.cs" />
     <Compile Include="Layout\LayoutEngine.cs" />
     <Compile Include="Layout\LayoutItem.cs" />
@@ -147,7 +160,8 @@
     <Compile Include="Translation\Language.cs" />
     <Compile Include="Translation\LanguageManager.cs" />
     <Compile Include="Utilities.cs" />
-    <Compile Include="Win32.cs" />
+    <Compile Include="Win32\SafeFindHandle.cs" />
+    <Compile Include="Win32\Win32Wrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Prompt\FilePicker.resx">
@@ -160,6 +174,7 @@
       <DependentUpon>StringComboBoxPrompt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
