@@ -52,6 +52,7 @@
     <Compile Include="Extensions\ComboBoxObjectCollectionExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
+    <Compile Include="Extensions\ListBoxExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\ListViewItemExtensions.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
