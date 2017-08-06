@@ -52,6 +52,7 @@
     <Compile Include="EnumUtil.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="Extensions\ComboBoxObjectCollectionExtensions.cs" />
+    <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\ListBoxExtensions.cs" />
